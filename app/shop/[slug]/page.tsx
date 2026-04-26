@@ -252,7 +252,7 @@ export default function ProductDetailPage() {
 
             <div className="flex gap-4 text-xs text-gray-500">
               {[
-                { Icon: Shield, text: 'Lab Verified 99.9%' },
+                { Icon: Shield, text: 'Lab Verified 99+%' },
                 { Icon: Truck, text: 'Fast & Discreet Shipping' },
                 { Icon: FlaskConical, text: 'COA Available' },
               ].map(({ Icon, text }) => (
@@ -331,7 +331,7 @@ export default function ProductDetailPage() {
                 </p>
                 <div className="grid grid-cols-3 gap-4 mb-5">
                   {[
-                    { label: 'Purity', value: '≥99.9%' },
+                    { label: 'Purity', value: '≥99+%' },
                     { label: 'Method', value: 'HPLC-UV' },
                     { label: 'Identity', value: 'MS Confirmed' },
                   ].map(({ label, value }) => (

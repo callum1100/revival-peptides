@@ -19,7 +19,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'How do you ensure product purity?',
-        a: 'Every batch of our peptides is tested by an independent, accredited third-party laboratory. We use High-Performance Liquid Chromatography (HPLC) to verify purity at ≥99.9%, and Mass Spectrometry (MS) to confirm the identity and molecular structure of each compound. Certificates of Analysis (COA) are available for every product.',
+        a: 'Every batch of our peptides is tested by an independent, accredited third-party laboratory. We use High-Performance Liquid Chromatography (HPLC) to verify purity at ≥99+%, and Mass Spectrometry (MS) to confirm the identity and molecular structure of each compound. Certificates of Analysis (COA) are available for every product.',
       },
       {
         q: 'Where can I find the Certificate of Analysis (COA)?',

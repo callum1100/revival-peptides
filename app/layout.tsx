@@ -13,10 +13,10 @@ const barlowCondensed = Barlow_Condensed({ subsets: ['latin'], variable: '--font
 
 export const metadata: Metadata = {
   title: 'Revival Peptides — Premium Research Compounds',
-  description: 'Lab-tested, science-backed research peptides. 99.9% purity guaranteed. USA manufactured. Trusted by researchers worldwide.',
+  description: 'Lab-tested, science-backed research peptides. 99+% purity guaranteed. USA manufactured. Trusted by researchers worldwide.',
   openGraph: {
     title: 'Revival Peptides — Premium Research Compounds',
-    description: 'Lab-tested, science-backed research peptides. 99.9% purity guaranteed.',
+    description: 'Lab-tested, science-backed research peptides. 99+% purity guaranteed.',
     images: [{ url: '/hero_final_v2.png' }],
   },
 };

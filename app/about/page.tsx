@@ -28,7 +28,7 @@ const FEATURES = [
 const STATS = [
   { Icon: Users, value: '10,000+', label: 'Satisfied Researchers' },
   { Icon: Beaker, value: '18+', label: 'Research Compounds' },
-  { Icon: Award, value: '99.9%', label: 'Average Purity' },
+  { Icon: Award, value: '99+%', label: 'Average Purity' },
   { Icon: Shield, value: '100%', label: 'Third-Party Verified' },
 ];
 
