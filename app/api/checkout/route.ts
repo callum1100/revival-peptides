@@ -89,10 +89,19 @@ export async function POST(request: NextRequest) {
 
     console.log('Line items being sent to WC:', lineItems);
 
-    const total = sellableItems.reduce((sum, item) => {
+    const subtotal = sellableItems.reduce((sum, item) => {
       const product = products.find((p) => p.id === item.productId);
       return sum + (product?.price || 0) * item.quantity;
     }, 0);
+
+    const shippingCost = subtotal >= 250 ? 0 : 9.99;
+    const total = subtotal + shippingCost;
+
+    const shippingLines = shippingCost > 0 ? [{
+      method_id: 'flat_rate',
+      method_title: 'Standard Shipping',
+      total: shippingCost.toFixed(2),
+    }] : [];
 
     const billing: WCAddress = {
       first_name: body.customer.firstName,
@@ -137,6 +146,7 @@ export async function POST(request: NextRequest) {
       billing,
       shipping,
       line_items: lineItems,
+      shipping_lines: shippingLines,
     });
 
     if (attempt) {
