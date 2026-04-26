@@ -2,7 +2,6 @@
 
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Lock, ChevronRight, Check, CircleAlert as AlertCircle, Loader } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
@@ -203,19 +202,10 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Header */}
+      {/* Breadcrumb */}
       <div className="border-b border-[#1a1a1a] py-4 px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/image copy.png"
-              alt="Revival Peptides"
-              width={140}
-              height={42}
-              style={{ height: '40px', width: 'auto' }}
-            />
-          </Link>
-          <nav className="hidden sm:flex items-center gap-1.5 text-xs text-gray-600">
+          <nav className="flex items-center gap-1.5 text-xs text-gray-600">
             <span className="text-gray-400">Cart</span>
             <ChevronRight className="w-3 h-3" />
             <span className="text-[#D4AF37] font-semibold">Information</span>
