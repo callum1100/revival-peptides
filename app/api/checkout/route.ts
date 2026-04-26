@@ -58,22 +58,21 @@ export async function POST(request: NextRequest) {
 
     console.log('Products found in DB:', products);
 
-    // Filter to only items that have a WooCommerce product ID mapping
     const sellableItems = body.items.filter((item) => {
       const product = products.find((p) => p.id === item.productId);
       return product?.wc_product_id != null;
     });
 
-    const skippedItems = body.items.filter((item) => {
+    const feeItems = body.items.filter((item) => {
       const product = products.find((p) => p.id === item.productId);
-      return !product?.wc_product_id;
+      return !product?.wc_product_id && product?.price;
     });
 
-    if (skippedItems.length > 0) {
-      console.warn('Skipping items without WooCommerce mapping:', skippedItems.map((i) => i.productId));
+    if (feeItems.length > 0) {
+      console.log('Adding fee_lines for items without WC mapping:', feeItems.map((i) => i.productId));
     }
 
-    if (sellableItems.length === 0) {
+    if (sellableItems.length === 0 && feeItems.length === 0) {
       return NextResponse.json({
         error: 'None of the cart items are currently available for purchase. Please contact support.',
       }, { status: 400 });
@@ -87,9 +86,14 @@ export async function POST(request: NextRequest) {
       };
     });
 
+    const fees = feeItems.map((item) => {
+      const product = products.find((p) => p.id === item.productId)!;
+      return { name: product.name, total: (product.price * item.quantity).toFixed(2) };
+    });
+
     console.log('Line items being sent to WC:', lineItems);
 
-    const subtotal = sellableItems.reduce((sum, item) => {
+    const subtotal = body.items.reduce((sum, item) => {
       const product = products.find((p) => p.id === item.productId);
       return sum + (product?.price || 0) * item.quantity;
     }, 0);
@@ -147,6 +151,7 @@ export async function POST(request: NextRequest) {
       shipping,
       line_items: lineItems,
       shipping_lines: shippingLines,
+      fee_lines: fees,
     });
 
     if (attempt) {

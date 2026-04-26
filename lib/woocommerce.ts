@@ -36,6 +36,7 @@ export interface WCOrderData {
   shipping: Omit<WCAddress, 'email' | 'phone'>;
   line_items: WCLineItem[];
   shipping_lines?: WCShippingLine[];
+  fee_lines?: Array<{ name: string; total: string }>;
   customer_note?: string;
 }
 
