@@ -9,7 +9,7 @@ import { Product } from '@/lib/types';
 import ProductCard from '@/components/products/ProductCard';
 
 const STATS = [
-  { value: '99+%', label: 'Purity' },
+  { value: '99.9%', label: 'Purity' },
   { value: 'USA', label: 'Manufactured' },
   { value: '47', label: 'Countries Served' },
 ];
@@ -200,7 +200,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 h-full flex items-center justify-center md:justify-start">
           <div className="flex items-center gap-0 w-full max-w-2xl">
             {[
-              { text: '99+% Purity Tested' },
+              { text: '99.9% Purity Tested' },
               { text: 'Ships in 24 Hours' },
               { text: 'COA Included With Every Order' },
             ].map((item, i) => (
@@ -353,7 +353,7 @@ export default function HomePage() {
                   className="absolute bottom-6 right-6 p-4 text-right backdrop-blur-sm"
                   style={{ background: 'rgba(10,10,10,0.92)', border: '1px solid rgba(212,175,55,0.2)' }}
                 >
-                  <div className="font-cinzel font-black text-3xl leading-none" style={{ color: '#D4AF37' }}>99+%</div>
+                  <div className="font-cinzel font-black text-3xl leading-none" style={{ color: '#D4AF37' }}>99.9%</div>
                   <div className="font-inter text-white text-sm font-semibold mt-1">Avg. Purity</div>
                   <div className="font-inter text-xs mt-0.5" style={{ color: '#a0a0a0' }}>Third-party verified</div>
                 </div>

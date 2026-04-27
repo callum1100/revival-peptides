@@ -1,12 +1,11 @@
 'use client';
 
 import React from 'react';
-import { useState } from 'react';
 import { X, Minus, Plus, Trash2, ShoppingBag, Package, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/lib/cart-context';
 import Link from 'next/link';
-import { AuthModal } from '@/components/auth/AuthModal';
+import { AuthDrawer } from '@/components/auth/AuthDrawer';
 
 const FREE_SHIPPING_THRESHOLD = 250;
 
@@ -27,7 +26,6 @@ const PAYMENT_METHODS = [
 export default function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal } = useCart();
   const [orderBump, setOrderBump] = React.useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const total = subtotal + (orderBump ? ORDER_BUMP.price : 0);
   const progress = Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100);
@@ -264,19 +262,10 @@ export default function CartDrawer() {
                   </div>
                 </div>
 
-                <div className="border-t border-zinc-800 pt-4 text-center">
-                  <button
-                    onClick={() => setAuthModalOpen(true)}
-                    className="text-xs text-zinc-500 hover:text-yellow-500 transition-colors"
-                  >
-                    Have an account? <span className="text-yellow-500 underline">Sign in</span>
-                  </button>
+                <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: '14px' }}>
+                  <p className="font-inter text-[10px] uppercase tracking-wider mb-3" style={{ color: '#4a4a4a' }}>Account</p>
+                  <AuthDrawer />
                 </div>
-
-                <AuthModal
-                  isOpen={authModalOpen}
-                  onClose={() => setAuthModalOpen(false)}
-                />
               </div>
             )}
           </motion.div>

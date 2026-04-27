@@ -2,8 +2,10 @@
 
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Lock, ChevronRight, Check, CircleAlert as AlertCircle, Loader } from 'lucide-react';
+import { Lock, ChevronRight, Check, CircleAlert as AlertCircle } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { AddressAutocomplete } from '@/components/checkout/AddressAutocomplete';
 
@@ -115,9 +117,9 @@ function SelectField({
 }
 
 export default function CheckoutPage() {
-  const { items, subtotal, clearCart } = useCart();
+  const router = useRouter();
+  const { items, subtotal } = useCart();
   const [formData, setFormData] = useState<FormData>(initialForm);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const shipping = subtotal >= 250 ? 0 : 9.99;
@@ -145,7 +147,7 @@ export default function CheckoutPage() {
     setFormData((prev) => ({ ...prev, address1: value }));
   }, []);
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleContinue(e: React.FormEvent) {
     e.preventDefault();
     if (
       !formData.email ||
@@ -160,52 +162,25 @@ export default function CheckoutPage() {
       return;
     }
     setError(null);
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customer: {
-            email: formData.email,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            phone: formData.phone,
-          },
-          shipping: {
-            address1: formData.address1,
-            address2: formData.address2,
-            city: formData.city,
-            state: formData.state,
-            postcode: formData.postcode,
-            country: formData.country || 'US',
-          },
-          items: items.map((item) => ({
-            productId: item.product.id,
-            quantity: item.quantity,
-          })),
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Checkout failed');
-
-      clearCart();
-      window.location.replace(data.paymentUrl);
-    } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : 'Something went wrong. Please try again.';
-      setError(msg);
-      setLoading(false);
-    }
+    sessionStorage.setItem('checkout_data', JSON.stringify(formData));
+    router.push('/checkout/payment');
   }
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Breadcrumb */}
+      {/* Header */}
       <div className="border-b border-[#1a1a1a] py-4 px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <nav className="flex items-center gap-1.5 text-xs text-gray-600">
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/image copy.png"
+              alt="Revival Peptides"
+              width={140}
+              height={42}
+              style={{ height: '40px', width: 'auto' }}
+            />
+          </Link>
+          <nav className="hidden sm:flex items-center gap-1.5 text-xs text-gray-600">
             <span className="text-gray-400">Cart</span>
             <ChevronRight className="w-3 h-3" />
             <span className="text-[#D4AF37] font-semibold">Information</span>
@@ -223,7 +198,7 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 items-start">
           {/* LEFT — Form */}
           <motion.form
-            onSubmit={handleSubmit}
+            onSubmit={handleContinue}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -291,21 +266,12 @@ export default function CheckoutPage() {
             {/* CTA */}
             <button
               type="submit"
-              disabled={loading || items.length === 0}
+              disabled={items.length === 0}
               className="w-full flex items-center justify-center gap-3 font-black text-[#0a0a0a] bg-[#D4AF37] hover:bg-[#F5D76E] transition-all duration-200 hover:shadow-[0_6px_30px_rgba(212,175,55,0.4)] rounded-lg uppercase tracking-wider text-sm disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-[#D4AF37] disabled:hover:shadow-none"
               style={{ minHeight: '56px' }}
             >
-              {loading ? (
-                <>
-                  <Loader className="w-4 h-4 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <Lock className="w-4 h-4" />
-                  Continue to Payment — ${total.toFixed(2)}
-                </>
-              )}
+              <Lock className="w-4 h-4" />
+              Continue to Payment — ${total.toFixed(2)}
             </button>
             <p className="text-center text-gray-600 text-xs mt-3 flex items-center justify-center gap-1.5">
               <Lock className="w-3 h-3 text-green-500" />
@@ -339,7 +305,7 @@ export default function CheckoutPage() {
                           <div className="w-14 h-14 rounded-lg bg-[#111111] border border-[#1e1e1e] overflow-hidden flex-shrink-0">
                             <img src={item.product.image_url} alt={item.product.name} className="w-full h-full object-cover" />
                           </div>
-                          <span className="absolute -top-1.5 -right-1.5 bg-[#D4AF37] text-[#0a0a0a] text-[10px] font-bold rounded-full flex items-center justify-center min-w-[18px] min-h-[18px] px-1">
+                          <span className="absolute -top-1.5 -right-1.5 bg-[#D4AF37] text-[#0a0a0a] text-[10px] font-bold rounded-full w-4.5 h-4.5 flex items-center justify-center min-w-[18px] min-h-[18px] px-1">
                             {item.quantity}
                           </span>
                         </div>

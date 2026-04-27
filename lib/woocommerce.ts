@@ -22,12 +22,6 @@ export interface WCAddress {
   phone: string;
 }
 
-export interface WCShippingLine {
-  method_id: string;
-  method_title: string;
-  total: string;
-}
-
 export interface WCOrderData {
   payment_method: string;
   payment_method_title: string;
@@ -35,8 +29,6 @@ export interface WCOrderData {
   billing: WCAddress;
   shipping: Omit<WCAddress, 'email' | 'phone'>;
   line_items: WCLineItem[];
-  shipping_lines?: WCShippingLine[];
-  fee_lines?: Array<{ name: string; total: string }>;
   customer_note?: string;
 }
 

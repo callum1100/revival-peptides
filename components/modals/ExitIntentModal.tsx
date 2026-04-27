@@ -109,7 +109,7 @@ export default function ExitIntentModal() {
                   style={{ background: 'rgba(10,10,10,0.9)', border: '1px solid rgba(212,175,55,0.2)' }}
                 >
                   <p className="font-barlow text-white font-bold text-xs">BPC-157 — 10mg</p>
-                  <p className="font-inter text-[10px] mt-0.5" style={{ color: '#4ade80' }}>99+% Purity Verified</p>
+                  <p className="font-inter text-[10px] mt-0.5" style={{ color: '#4ade80' }}>99.9% Purity Verified</p>
                 </div>
               </div>
 

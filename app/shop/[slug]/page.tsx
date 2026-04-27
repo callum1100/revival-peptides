@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, ChevronRight, Star, CircleCheck as CheckCircle2, FileText, MessageSquare, Minus, Plus, Shield, Truck, FlaskConical } from 'lucide-react';
+import { ShoppingCart, ChevronRight, Star, CircleCheck as CheckCircle2, FileText, MessageSquare, Minus, Plus, Shield, Truck, FlaskConical, Zap } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { Product } from '@/lib/types';
 import { useCart } from '@/lib/cart-context';
@@ -225,9 +225,10 @@ export default function ProductDetailPage() {
 
             <button
               onClick={handlePayNow}
-              className="text-sm text-zinc-500 hover:text-yellow-500 mt-3 mb-5 w-full transition"
+              className="w-full flex items-center justify-center gap-2 py-3 mb-5 rounded-lg font-bold text-sm uppercase tracking-wider transition-all duration-200 border border-gold/40 text-gold hover:bg-gold/10 hover:border-gold"
             >
-              Buy now → instant checkout
+              <Zap className="w-4 h-4" />
+              Buy Now — Checkout Instantly
             </button>
 
             <div className="p-4 bg-[#111111] border border-[#262626] rounded-xl mb-5">
@@ -251,7 +252,7 @@ export default function ProductDetailPage() {
 
             <div className="flex gap-4 text-xs text-gray-500">
               {[
-                { Icon: Shield, text: 'Lab Verified 99+%' },
+                { Icon: Shield, text: 'Lab Verified 99.9%' },
                 { Icon: Truck, text: 'Fast & Discreet Shipping' },
                 { Icon: FlaskConical, text: 'COA Available' },
               ].map(({ Icon, text }) => (
@@ -330,7 +331,7 @@ export default function ProductDetailPage() {
                 </p>
                 <div className="grid grid-cols-3 gap-4 mb-5">
                   {[
-                    { label: 'Purity', value: '≥99+%' },
+                    { label: 'Purity', value: '≥99.9%' },
                     { label: 'Method', value: 'HPLC-UV' },
                     { label: 'Identity', value: 'MS Confirmed' },
                   ].map(({ label, value }) => (

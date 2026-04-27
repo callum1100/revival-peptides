@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Product } from '@/lib/types';
 import { useCart } from '@/lib/cart-context';
@@ -128,14 +128,14 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                   Add to Cart
                 </button>
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handlePayNow(e);
-                  }}
-                  className="w-full text-center text-xs text-zinc-500 hover:text-yellow-500 mt-2 py-1 transition"
+                  onClick={handlePayNow}
+                  className="w-full py-2 font-inter font-bold text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2"
+                  style={{ background: 'transparent', color: '#D4AF37', border: '1px solid rgba(212,175,55,0.4)', borderRadius: '0' }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(212,175,55,0.08)'; (e.currentTarget as HTMLElement).style.borderColor = '#D4AF37'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(212,175,55,0.4)'; }}
                 >
-                  Buy now → instant checkout
+                  <Zap className="w-3.5 h-3.5" />
+                  Buy Now
                 </button>
               </>
             )}
